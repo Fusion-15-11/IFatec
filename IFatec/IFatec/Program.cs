@@ -1,6 +1,16 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using IFatec;
+using IFatec.Factories;
 
-app.MapGet("/", () => "Hello World!");
+IIFatecFactory factory;
 
-app.Run();
+factory = new FactoryItaliana();
+{
+    var cliente = new Cliente(factory);
+    cliente.CriarPedido();
+}
+
+factory = new FactoryJaponesa();
+{
+    var cliente = new Cliente(factory);
+    cliente.CriarPedido();
+}
