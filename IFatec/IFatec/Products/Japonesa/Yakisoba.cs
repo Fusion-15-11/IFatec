@@ -1,6 +1,14 @@
-﻿namespace IFatec.Products.Japonesa
+﻿using IFatec.Factories;
+
+namespace IFatec.Products.Japonesa
 {
-    public class Yakisoba
+    //Produto Concreto
+
+    public class Yakisoba : IPratoPrincipal
     {
+        public string BuscarDescrição()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

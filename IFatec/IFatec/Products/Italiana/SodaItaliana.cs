@@ -1,6 +1,13 @@
-﻿namespace IFatec.Products.Italiana
+﻿using IFatec.Factories;
+
+namespace IFatec.Products.Italiana
 {
-    public class Lasanha
+    //Produto Concreto
+    public class SodaItaliana : IBebida
     {
+        public string BuscarDescrição()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,13 @@
-﻿namespace IFatec.Products.Italiana
+﻿using IFatec.Factories;
+
+namespace IFatec.Products.Italiana
 {
-    public class Lasanha
+    //Produto Concreto
+    public class Lasanha : IPratoPrincipal
     {
+        public string BuscarDescrição()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
