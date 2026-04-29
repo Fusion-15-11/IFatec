@@ -8,6 +8,14 @@ namespace IFatec
         IPratoPrincipal pratoPrincipal;
         ISobremesa sobremesa;
 
+        public void PersonalizarPrato(string ingrediente)
+        {
+            if (!string.IsNullOrWhiteSpace(ingrediente))
+            {
+                pratoPrincipal.RetirarIngrediente(ingrediente);
+            }
+        }
+
         public Cliente(IIFatecFactory ifatec) 
         {
             bebida = ifatec.BuscarBebida();
