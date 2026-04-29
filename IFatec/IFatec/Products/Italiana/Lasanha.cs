@@ -7,7 +7,7 @@ namespace IFatec.Products.Italiana
     {
         public string BuscarDescrição()
         {
-            throw new NotImplementedException();
+            return "LASANHA:\n Massa de ovos, molho bolonhesa rico em sabor, bechamel cremoso e muçarela. Gratinada com parmesão ralado na hora.\n";
         }
     }
 }

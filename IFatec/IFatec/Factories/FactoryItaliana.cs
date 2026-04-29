@@ -1,20 +1,22 @@
-﻿namespace IFatec.Factories
+﻿using IFatec.Products.Italiana;
+
+namespace IFatec.Factories
 {
     public class FactoryItaliana : IIFatecFactory
     {
         public IBebida BuscarBebida()
         {
-            throw new NotImplementedException();
+            return new SodaItaliana();
         }
 
         public IPratoPrincipal BuscarPratoPrincipal()
         {
-            throw new NotImplementedException();
+            return new Lasanha();
         }
 
         public ISobremesa BuscarSobremesa()
         {
-            throw new NotImplementedException();
+            return new Tiramisu();
         }
     }
 }

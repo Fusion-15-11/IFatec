@@ -8,7 +8,7 @@ namespace IFatec.Products.Japonesa
     {
         public string BuscarDescrição()
         {
-            throw new NotImplementedException();
+            return "MOCHI:\n Delicada massa japonesa de arroz glutinoso com textura macia e elástica. Recheado com pasta de feijão azuki ou sorvete.\n";
         }
     }
 }

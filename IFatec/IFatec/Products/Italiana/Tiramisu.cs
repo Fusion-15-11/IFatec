@@ -7,7 +7,7 @@ namespace IFatec.Products.Italiana
     {
         public string BuscarDescrição()
         {
-            throw new NotImplementedException();
+            return "TIRAMISU:\n Sobremesa italiana à base de biscoitos ingleses embebidos em café espresso, camadas cremosas de queijo mascarpone e finalizada com cacau em pó polvilhado.\n";
         }
     }
 }

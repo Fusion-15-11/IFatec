@@ -8,7 +8,7 @@ namespace IFatec.Products.Japonesa
     {
         public string BuscarDescrição()
         {
-            throw new NotImplementedException();
+            return "SAQUE:\n Bebida fermentada de arroz polido, com aroma suave e teor alcoólico balanceado. Pode ser apreciado quente ou gelado.\n";
         }
     }
 }

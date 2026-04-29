@@ -8,7 +8,7 @@ namespace IFatec.Products.Japonesa
     {
         public string BuscarDescrição()
         {
-            throw new NotImplementedException();
+            return "YAKISOBA:\n Macarrão selado na chapa com mix de legumes frescos, carnes [bovina e frango] e molho à base de shoyu e especiarias orientais.\n";
         }
     }
 }
