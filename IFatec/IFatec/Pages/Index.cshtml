@@ -1,0 +1,58 @@
+﻿@page
+@using IFatec.Factories
+@using IFatec
+
+@{
+    // Pega o que o usuário escolheu na URL (ex: ?escolha=ita)
+    var escolha = Request.Query["escolha"];
+    
+    // Criamos uma variável para o cliente (começa vazia)
+    IFatec.Cliente meuCliente = null;
+
+    // Se a escolha for 'ita', damos a fábrica italiana para o cliente
+    if (escolha == "ita")
+    {
+        meuCliente = new Cliente(new FactoryItaliana());
+    }
+    // Se for 'jap', damos a fábrica japonesa
+    else if (escolha == "jap")
+    {
+        meuCliente = new Cliente(new FactoryJaponesa());
+    }
+}
+
+<style>
+    body { background: #121212; color: white; font-family: sans-serif; text-align: center; }
+    .menu { margin: 20px; padding: 20px; border: 1px solid #444; display: inline-block; text-align: left; }
+    .btn { padding: 10px; margin: 5px; cursor: pointer; text-decoration: none; color: white; border: 1px solid white; display: inline-block; }
+    h3 { color: #90caf9; margin-bottom: 0; }
+    p { margin-top: 5px; color: #ccc; }
+</style>
+
+<h1>Cardápio FatecFood</h1>
+
+<!-- Botões simples que recarregam a página com a escolha -->
+<a href="?escolha=ita" class="btn">Ver Menu Italiano</a>
+<a href="?escolha=jap" class="btn">Ver Menu Japonês</a>
+
+<hr />
+
+@if (meuCliente != null)
+{
+    <div class="menu">
+        <h2>Exibindo: @(escolha == "ita" ? "Italiano" : "Japonês")</h2>
+
+        <h3>PRATO:</h3>
+        <p>@meuCliente.BuscarDescricaoPratoPrincipal()</p>
+
+        <h3>SOBREMESA:</h3>
+        <p>@meuCliente.BuscarDescricaoSobremesa()</p>
+
+        <h3>BEBIDA:</h3>
+        <p>@meuCliente.BuscarDescricaoBebida()</p>
+    </div>
+}
+else
+{
+    <p>Clique em um dos botões acima para ver os pratos!</p>
+}

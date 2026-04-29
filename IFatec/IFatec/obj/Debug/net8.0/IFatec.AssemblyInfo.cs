@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IFatec")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f5bb0d8894014f7eed3f702b27c428c9cf884e9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+59f5971ed18f109705d14188b052709c69f76370")]
 [assembly: System.Reflection.AssemblyProductAttribute("IFatec")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IFatec")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,4 +1,4 @@
-using IFatec;
+/*using IFatec;
 using IFatec.Factories;
 
 namespace IFatec
@@ -30,3 +30,22 @@ namespace IFatec
         }
     }
 }
+
+*/
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
+
+var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting();
+app.MapRazorPages();
+
+// ESTA LINHA ABAIXO resolve o erro 404 na página inicial:
+app.MapGet("/", context => {
+    context.Response.Redirect("/Index");
+    return Task.CompletedTask;
+});
+
+app.Run();
