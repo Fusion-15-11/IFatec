@@ -38,5 +38,16 @@ namespace IFatec
             return sobremesa.BuscarDescrição();
         }
 
+        public void AdicionarGelo()
+        {
+            bebida = new Decorators.Bebida.GeloDecorator(bebida);
+        }
+
+        public void AdicionarLimao()
+        {
+            bebida = new Decorators.Bebida.LimaoDecorator(bebida);
+        }
+
+
     }
 }
