@@ -1,4 +1,5 @@
 ﻿using IFatec.Factories;
+using IFatec.Decorators; 
 
 namespace IFatec
 {
@@ -8,6 +9,13 @@ namespace IFatec
         IPratoPrincipal pratoPrincipal;
         ISobremesa sobremesa;
 
+        public Cliente(IIFatecFactory ifatec)
+        {
+            bebida = ifatec.BuscarBebida();
+            pratoPrincipal = ifatec.BuscarPratoPrincipal();
+            sobremesa = ifatec.BuscarSobremesa();
+        }
+
         public void PersonalizarPrato(string ingrediente)
         {
             if (!string.IsNullOrWhiteSpace(ingrediente))
@@ -16,11 +24,10 @@ namespace IFatec
             }
         }
 
-        public Cliente(IIFatecFactory ifatec) 
+        // metodo para "embrulhar" o prato
+        public void AdicionarExtraParmesao()
         {
-            bebida = ifatec.BuscarBebida();
-            pratoPrincipal = ifatec.BuscarPratoPrincipal();
-            sobremesa = ifatec.BuscarSobremesa();  
+            pratoPrincipal = new ExtraQueijoParmesao(pratoPrincipal);
         }
 
         public string BuscarDescricaoBebida()
@@ -37,6 +44,5 @@ namespace IFatec
         {
             return sobremesa.BuscarDescrição();
         }
-
     }
 }
