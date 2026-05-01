@@ -33,17 +33,7 @@ namespace IFatec
 
 */
 
-using IFatec;
-using IFatec.Factories;
 
-IIFatecFactory pedidoItaliano = new FactoryItaliana();
-Cliente cliente = new Cliente(pedidoItaliano);
-
-// AQUI entra o decorator
-cliente.AdicionarGelo();
-cliente.AdicionarLimao();
-
-Console.WriteLine(cliente.BuscarDescricaoBebida());
 
 
 var builder = WebApplication.CreateBuilder(args);

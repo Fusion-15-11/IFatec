@@ -3,6 +3,6 @@
     // AbstractProduct
     public interface IBebida
     {
-        string BuscarDescrição();
+        String BuscarDescrição();
     }
 }

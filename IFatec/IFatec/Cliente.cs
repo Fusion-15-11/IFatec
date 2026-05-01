@@ -27,7 +27,7 @@ namespace IFatec
         // metodo para "embrulhar" o prato
         public void AdicionarExtraParmesao()
         {
-            pratoPrincipal = new ExtraQueijoParmesao(pratoPrincipal);
+            pratoPrincipal = new ExtraQueijoParmesaoDecorator(pratoPrincipal);
         }
 
         public string BuscarDescricaoBebida()
@@ -45,15 +45,20 @@ namespace IFatec
             return sobremesa.BuscarDescrição();
         }
 
-
+        // embrulhar a bebida com gelo ou limão
         public void AdicionarGelo()
         {
-            bebida = new Decorators.Bebida.GeloDecorator(bebida);
+            bebida = new GeloDecorator(bebida);
         }
 
         public void AdicionarLimao()
         {
-            bebida = new Decorators.Bebida.LimaoDecorator(bebida);
+            bebida = new LimaoDecorator(bebida);
+        }
+
+        public void AdicionarSorvete()
+        {
+            sobremesa = new SorveteDecorator(sobremesa);
         }
 
     }

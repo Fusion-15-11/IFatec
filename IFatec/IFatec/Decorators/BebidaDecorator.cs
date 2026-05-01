@@ -1,6 +1,7 @@
-﻿using IFatec.Factories;
+﻿using System;
+using IFatec.Factories;
 
-namespace IFatec.Decorators.Bebida
+namespace IFatec.Decorators
 {
     public  abstract class BebidaDecorator : IBebida
     {

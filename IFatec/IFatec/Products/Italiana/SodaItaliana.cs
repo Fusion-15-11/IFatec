@@ -7,7 +7,8 @@ namespace IFatec.Products.Italiana
     {
         public string BuscarDescrição()
         {
-            return "SODA ITALIANA:\n Bebida refrescante à base de água gaseificada, gelo e xarope de frutas premium. Disponível em diversos sabores.\n";
+            return "SODA ITALIANA:\n Bebida refrescante à base de água gaseificada, gelo e xarope de frutas premium. Disponível em diversos sabores. Adicional: \n"; 
         }
+
     }
 }

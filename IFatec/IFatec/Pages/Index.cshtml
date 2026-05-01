@@ -17,6 +17,14 @@
     //verifica se queijo foi marcado
     bool addParmesao = pedidoRealizado && Request.Form["addParmesao"] == "true";
 
+    bool addGelo = pedidoRealizado && Request.Form["addGelo"] == "true";
+
+    bool addLimao = pedidoRealizado && Request.Form["addLimao"] == "true";
+
+    bool addSorvete = pedidoRealizado && Request.Form["addSorvete"] == "true";
+
+
+
     IFatec.Cliente? meuCliente = null;
 
     if (escolhaAtual == "ita") {
@@ -32,6 +40,45 @@
         // 1. Se marcou a caixa do queijo, aplica o DECORATOR
         if (addParmesao) {
             meuCliente.AdicionarExtraParmesao();
+        }
+
+        // 2. Retira o ingrediente (se o usuário digitou algum)
+        meuCliente.PersonalizarPrato(ingredienteForm);
+    }
+
+    if (pedidoRealizado && meuCliente != null)
+    {
+
+        // 1. Se marcou a caixa do Gelo, aplica o DECORATOR
+        if (addGelo)
+        {
+            meuCliente.AdicionarGelo();
+        }
+
+        // 2. Retira o ingrediente (se o usuário digitou algum)
+        meuCliente.PersonalizarPrato(ingredienteForm);
+    }
+
+    if (pedidoRealizado && meuCliente != null)
+    {
+
+        // 1. Se marcou a caixa do Limao, aplica o DECORATOR
+        if (addLimao)
+        {
+            meuCliente.AdicionarLimao();
+        }
+
+        // 2. Retira o ingrediente (se o usuário digitou algum)
+        meuCliente.PersonalizarPrato(ingredienteForm);
+    }
+
+    if (pedidoRealizado && meuCliente != null)
+    {
+
+        // 1. Se marcou a caixa do Sorvete, aplica o DECORATOR
+        if (addSorvete)
+        {
+            meuCliente.AdicionarSorvete();
         }
 
         // 2. Retira o ingrediente (se o usuário digitou algum)
@@ -75,7 +122,25 @@
                 
                 <div>
                     <input type="checkbox" name="addParmesao" value="true" id="parmesao" />
-                    <label for="parmesao">🧀 Adicionar Queijo Parmesão Extra? (R$ 5,00)</label>
+                    <label for="parmesao">Adicionar Queijo Parmesão Extra? (R$ 5,00)</label>
+                </div>
+                <br />
+
+                <div>
+                    <input type="checkbox" name="addGelo" value="true" id="gelo" />
+                    <label for="gelo">Adicionar Gelo Extra? (R$ 2,00)</label>
+                </div>
+                <br />
+
+                <div>
+                    <input type="checkbox" name="addLimao" value="true" id="limao" />
+                    <label for="limao">Adicionar Limão Extra? (R$ 3,00)</label>
+                </div>
+                <br />
+
+                <div>
+                    <input type="checkbox" name="addSorvete" value="true" id="sorvete" />
+                    <label for="sorvete">Adicionar Sorvete? (R$ 20,00)</label>
                 </div>
                 <br />
 

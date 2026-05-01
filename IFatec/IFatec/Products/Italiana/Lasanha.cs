@@ -11,7 +11,7 @@ namespace IFatec.Products.Italiana
         }
         public string BuscarDescrição()
         {
-            string descricao = "LASANHA:\n Massa de ovos, molho bolonhesa rico em sabor, bechamel cremoso e muçarela. Gratinada com parmesão ralado na hora.\n";
+            string descricao = "LASANHA:\n Massa de ovos, molho bolonhesa rico em sabor, bechamel cremoso e muçarela. Gratinada com parmesão ralado na hora. \n";
 
             // Se o usuário digitou algo para remover, adicionamos um aviso na descrição
             if (!string.IsNullOrEmpty(_ingredienteRemovido))

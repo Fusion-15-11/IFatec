@@ -1,6 +1,8 @@
-﻿using IFatec.Factories;
+﻿using System;
+using IFatec.Factories;
+using IFatec.Decorators;
 
-namespace IFatec.Decorators.Bebida
+namespace IFatec.Decorators
 {
     public class GeloDecorator : BebidaDecorator
     {
@@ -9,7 +11,7 @@ namespace IFatec.Decorators.Bebida
 
         public override string BuscarDescrição()
         {
-            return base.BuscarDescrição() + " Com gelo.";
+            return base.BuscarDescrição() + " Gelo";
         }
     }
 }

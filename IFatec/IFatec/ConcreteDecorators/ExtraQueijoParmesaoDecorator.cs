@@ -1,12 +1,13 @@
 ﻿using System;
+using IFatec.Decorators;
 using IFatec.Factories;
 
 namespace IFatec.Decorators
 {
-    public class ExtraQueijoParmesao : AdicionalDecorator
+    public class ExtraQueijoParmesaoDecorator : AdicionalDecorator
     {
         // O construtor pega o prato e manda para a classe pai (base) guardar
-        public ExtraQueijoParmesao(IPratoPrincipal prato) : base(prato)
+        public ExtraQueijoParmesaoDecorator(IPratoPrincipal prato) : base(prato)
         {
         }
 
