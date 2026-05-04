@@ -27,16 +27,21 @@ class Historico //Caretaker
         var _dadopedido = this.dadopedido.Last();
         this.dadopedido.Remove(_dadopedido);
 
-        
-        try
+        if (this.dadopedido.Count > 0)
         {
-            Console.WriteLine("Histórico: Restaurando Para: " + _dadopedido.GetPratoPrincipal());
-            this.pedido.Restore(_dadopedido);
-            return;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erro ao restaurar snapshot: {ex.Message}");
+            // Pega o NOVO último (que é o pedido anterior)
+            var ticketAnt = this.dadopedido.Last();
+
+            try
+            {
+                Console.WriteLine("Histórico: Restaurando Para: " + _dadopedido.GetPratoPrincipal());
+                this.pedido.Restore(ticketAnt);
+                return;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao restaurar snapshot: {ex.Message}");
+            }
         }
     }
 

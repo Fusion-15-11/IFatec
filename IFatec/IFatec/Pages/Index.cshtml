@@ -32,11 +32,6 @@
 
     bool clickDesfazer = Request.Method == "POST" && Request.Form["acao"] == "undo";
 
-    if (clickDesfazer && meuHistorico != null)
-    {
-        meuHistorico.Desfazer();
-    }
-
 
 
     IFatec.Cliente? meuCliente = null;
@@ -48,52 +43,22 @@
         meuCliente = new Cliente(new FactoryJaponesa());
     }
 
+    if (clickDesfazer && meuHistorico != null)
+    {
+        meuHistorico.Desfazer();
+    }
+
     // Aplica a personalização SE o botão foi clicado
-    if (pedidoRealizado && meuCliente != null) {
+    else if (pedidoRealizado && meuCliente != null) {
 
         // 1. Se marcou a caixa do queijo, aplica o DECORATOR
-        if (addParmesao) {
-            meuCliente.AdicionarExtraParmesao();
-        }
-
-        // 2. Retira o ingrediente (se o usuário digitou algum)
-        meuCliente.PersonalizarPrato(ingredienteForm);
-    }
-
-    if (pedidoRealizado && meuCliente != null)
-    {
-
+        if (addParmesao) { meuCliente.AdicionarExtraParmesao(); }
         // 1. Se marcou a caixa do Gelo, aplica o DECORATOR
-        if (addGelo)
-        {
-            meuCliente.AdicionarGelo();
-        }
-
-        // 2. Retira o ingrediente (se o usuário digitou algum)
-        meuCliente.PersonalizarPrato(ingredienteForm);
-    }
-
-    if (pedidoRealizado && meuCliente != null)
-    {
-
+        if (addGelo) {meuCliente.AdicionarGelo();}
         // 1. Se marcou a caixa do Limao, aplica o DECORATOR
-        if (addLimao)
-        {
-            meuCliente.AdicionarLimao();
-        }
-
-        // 2. Retira o ingrediente (se o usuário digitou algum)
-        meuCliente.PersonalizarPrato(ingredienteForm);
-    }
-
-    if (pedidoRealizado && meuCliente != null)
-    {
-
+        if (addLimao) {meuCliente.AdicionarLimao();}
         // 1. Se marcou a caixa do Sorvete, aplica o DECORATOR
-        if (addSorvete)
-        {
-            meuCliente.AdicionarSorvete();
-        }
+        if (addSorvete) {meuCliente.AdicionarSorvete();}
 
         // 2. Retira o ingrediente (se o usuário digitou algum)
         meuCliente.PersonalizarPrato(ingredienteForm);
@@ -111,7 +76,8 @@
 
         meuHistorico.Backup();
     }
-}
+        
+    }
 
 <h1>Cardápio FatecFood</h1>
 
