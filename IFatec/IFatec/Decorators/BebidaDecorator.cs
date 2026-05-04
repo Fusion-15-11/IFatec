@@ -10,9 +10,9 @@ namespace IFatec.Decorators
         {
             _bebida = bebida;
         }
-        public virtual string BuscarDescrição()
+        public virtual string BuscarDescricao()
         {
-            return _bebida.BuscarDescrição();
+            return _bebida.BuscarDescricao();
         }
     }
 }

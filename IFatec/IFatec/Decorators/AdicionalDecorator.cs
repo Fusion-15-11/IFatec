@@ -15,9 +15,9 @@ namespace IFatec.Decorators
         }
 
         // Repassa a busca da descrição para o prato original
-        public virtual string BuscarDescrição()
+        public virtual string BuscarDescricao()
         {
-            return _pratoEnvolvido.BuscarDescrição();
+            return _pratoEnvolvido.BuscarDescricao();
         }
 
         // Repassa a ordem de retirar ingrediente para o prato original

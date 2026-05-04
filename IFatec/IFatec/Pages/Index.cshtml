@@ -72,7 +72,9 @@
         if (meuHistorico == null)
         {
             meuHistorico = new Historico(meuPedido);
-        }
+        } else {
+    meuHistorico.SetPedido(meuPedido);
+}
 
         meuHistorico.Backup();
     }

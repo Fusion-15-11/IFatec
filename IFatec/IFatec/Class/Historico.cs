@@ -49,4 +49,9 @@ class Historico //Caretaker
     {
         return this.dadopedido;
     }
+
+    public void SetPedido(Pedido novoPedido)
+    {
+        this.pedido = novoPedido;
+    }
 }

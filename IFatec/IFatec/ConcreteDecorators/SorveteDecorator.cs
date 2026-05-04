@@ -7,9 +7,9 @@ namespace IFatec.Decorators
     {
         public SorveteDecorator(ISobremesa sobremesa) : base(sobremesa)
         {}
-        public override string BuscarDescrição()
+        public override string BuscarDescricao()
         {
-            return base.BuscarDescrição() + "Sorvete";
+            return base.BuscarDescricao() + "Sorvete";
         }
     }
 }

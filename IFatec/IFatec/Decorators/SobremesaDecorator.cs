@@ -10,9 +10,9 @@ namespace IFatec.Decorators
         {
             _sobremesa = sobremesa;
         }
-        public virtual string BuscarDescrição()
+        public virtual string BuscarDescricao()
         {
-            return _sobremesa.BuscarDescrição();
+            return _sobremesa.BuscarDescricao();
         }
     }
 }
