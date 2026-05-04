@@ -57,8 +57,6 @@
 
         // cria pedido
         meuPedido = new Pedido(
-<<<<<<< HEAD
-<<<<<<< HEAD
         meuCliente.BuscarDescricaoPratoPrincipal(),
         meuCliente.BuscarDescricaoSobremesa(),
         meuCliente.BuscarDescricaoBebida(),
@@ -68,20 +66,8 @@
         {
             meuHistorico = new Historico(meuPedido);
         } else {
-    meuHistorico.SetPedido(meuPedido);
-}
-=======
-=======
->>>>>>> Erick
-            meuCliente.BuscarDescricaoPratoPrincipal(),
-            meuCliente.BuscarDescricaoSobremesa(),
-            meuCliente.BuscarDescricaoBebida(),
-            DateTime.Now
-        );
-<<<<<<< HEAD
->>>>>>> Erick
-=======
->>>>>>> Erick
+            meuHistorico.SetPedido(meuPedido);
+        }
 
         // conecta histórico ao novo pedido
         meuHistorico = new Historico(meuPedido);
