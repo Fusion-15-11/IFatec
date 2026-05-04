@@ -2,7 +2,8 @@
 
 using IFatec.Interface;
 
-class Ticket : IDadoPedido /*Memento*/
+class Ticket : IDadoPedido //Memento - não pode ser mudado, e como se fosse um ticket fisico ou cupom fiscal, não
+                           //da pra modificar ele.
 {
     private string PratoPrincipal;
     private string Sobremesa;

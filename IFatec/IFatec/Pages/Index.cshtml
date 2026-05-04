@@ -4,66 +4,60 @@
 @using IFatec.Factories
 @using IFatec
 @using IFatec.Class.Pedido
+
 @functions {
     private static Pedido meuPedido = null;
     private static Historico meuHistorico = null;
 }
 
-
-
 @{
-    // Verifica se a requisição é uom POST (clique no botão de fazer pedido)
-    bool pedidoRealizado = Request.Method == "POST";
-
-    // Pega a escolha da URL para não perder a referência da fábrica
     string escolhaAtual = Request.Query["escolha"].ToString();
 
-    // Pega o ingrediente digitado, caso o pedido tenha sido realizado
-    string ingredienteForm = pedidoRealizado ? Request.Form["ingrediente"].ToString() : "";
-
-    //verifica se queijo foi marcado
-    bool addParmesao = pedidoRealizado && Request.Form["addParmesao"] == "true";
-
-    bool addGelo = pedidoRealizado && Request.Form["addGelo"] == "true";
-
-    bool addLimao = pedidoRealizado && Request.Form["addLimao"] == "true";
-
-    bool addSorvete = pedidoRealizado && Request.Form["addSorvete"] == "true";
-
-    bool clickDesfazer = Request.Method == "POST" && Request.Form["acao"] == "undo";
-
-
-
-    IFatec.Cliente? meuCliente = null;
-
-    if (escolhaAtual == "ita") {
-        meuCliente = new Cliente(new FactoryItaliana());
-    } 
-    else if (escolhaAtual == "jap") {
-        meuCliente = new Cliente(new FactoryJaponesa());
+    // Evita erro de form
+    string acao = "";
+    if (Request.Method == "POST" && Request.HasFormContentType)
+    {
+        acao = Request.Form["acao"];
     }
 
+    bool clicouFazerPedido = acao == "fazer_pedido";
+    bool clicouConfirmarFinal = acao == "confirmar_final";
+    bool clickDesfazer = acao == "undo";
+
+    if (meuPedido == null)
+    {
+        meuPedido = new Pedido("", "", "", DateTime.Now);
+        meuHistorico = new Historico(meuPedido);
+        meuHistorico.Backup();
+    }
+
+    // Memento
     if (clickDesfazer && meuHistorico != null)
     {
         meuHistorico.Desfazer();
     }
 
-    // Aplica a personalização SE o botão foi clicado
-    else if (pedidoRealizado && meuCliente != null) {
+    // Fábricas Concretas
+    IFatec.Cliente? meuCliente = null;
 
-        // 1. Se marcou a caixa do queijo, aplica o DECORATOR
-        if (addParmesao) { meuCliente.AdicionarExtraParmesao(); }
-        // 1. Se marcou a caixa do Gelo, aplica o DECORATOR
-        if (addGelo) {meuCliente.AdicionarGelo();}
-        // 1. Se marcou a caixa do Limao, aplica o DECORATOR
-        if (addLimao) {meuCliente.AdicionarLimao();}
-        // 1. Se marcou a caixa do Sorvete, aplica o DECORATOR
-        if (addSorvete) {meuCliente.AdicionarSorvete();}
+    if (escolhaAtual == "ita")
+        meuCliente = new Cliente(new FactoryItaliana());
+    else if (escolhaAtual == "jap")
+        meuCliente = new Cliente(new FactoryJaponesa());
 
-        // 2. Retira o ingrediente (se o usuário digitou algum)
-        meuCliente.PersonalizarPrato(ingredienteForm);
+    // Decorators
+    if (clicouFazerPedido && meuCliente != null)
+    {
+        if (Request.Form["addParmesao"] == "true") meuCliente.AdicionarExtraParmesao();
+        if (Request.Form["addGelo"] == "true") meuCliente.AdicionarGelo();
+        if (Request.Form["addLimao"] == "true") meuCliente.AdicionarLimao();
+        if (Request.Form["addSorvete"] == "true") meuCliente.AdicionarSorvete();
 
+        meuCliente.PersonalizarPrato(Request.Form["ingrediente"].ToString());
+
+        // cria pedido
         meuPedido = new Pedido(
+<<<<<<< HEAD
         meuCliente.BuscarDescricaoPratoPrincipal(),
         meuCliente.BuscarDescricaoSobremesa(),
         meuCliente.BuscarDescricaoBebida(),
@@ -75,122 +69,104 @@
         } else {
     meuHistorico.SetPedido(meuPedido);
 }
+=======
+            meuCliente.BuscarDescricaoPratoPrincipal(),
+            meuCliente.BuscarDescricaoSobremesa(),
+            meuCliente.BuscarDescricaoBebida(),
+            DateTime.Now
+        );
+>>>>>>> Erick
 
+        // conecta histórico ao novo pedido
+        meuHistorico = new Historico(meuPedido);
         meuHistorico.Backup();
     }
-        
+
+    // SALVAR ESTADO FINAL
+    if (clicouConfirmarFinal && meuPedido != null)
+    {
+        meuHistorico.Backup();
     }
+}
 
-<h1>Cardápio FatecFood</h1>
+<h1>IFatec</h1>
 
-<a href="/Index?escolha=ita">Ver Menu Italiano</a> | 
-<a href="/Index?escolha=jap">Ver Menu Japonês</a>
+<a href="/Index?escolha=ita">🇮🇹 Menu Italiano</a> |
+<a href="/Index?escolha=jap">🇯🇵 Menu Japonês</a>
 
 <hr />
-
-@if (pedidoRealizado && meuCliente != null)
-{
-    <div>
-        ✅ Pedido realizado com sucesso! A cozinha já está preparando.
-    </div>
-}
 
 @if (meuCliente != null)
 {
-    <div>
-        <h2>Resumo: @(escolhaAtual == "ita" ? "Pedido Italiano" : "Pedido Japonês")</h2>
+    <div style="background-color:#f5f5f5; padding:15px; margin-bottom:15px;">
+        <h2> Menu @(escolhaAtual == "ita" ? "Italiano" : "Japonês")</h2>
 
-        @if (meuPedido != null)
-        {
-            <h3>PRATO PRINCIPAL:</h3>
-            <p>@meuPedido.GetPratoPrincipal()</p>
-
-            <h3>SOBREMESA:</h3>
-            <p>@meuPedido.GetSobremesa()</p>
-
-            <h3>BEBIDA:</h3>
-            <p>@meuPedido.GetBebida()</p>
-        }
-        else if (meuCliente != null)
-        {
-            <h3>PRATO PRINCIPAL:</h3>
-            <p>@meuCliente.BuscarDescricaoPratoPrincipal()</p>
-
-            <h3>SOBREMESA:</h3>
-            <p>@meuCliente.BuscarDescricaoSobremesa()</p>
-
-            <h3>BEBIDA:</h3>
-            <p>@meuCliente.BuscarDescricaoBebida()</p>
-        }
-        @if (!pedidoRealizado)
-        {
-            <hr />
-            
-            <form method="post" action="/Index?escolha=@escolhaAtual">
-                
-                <div>
-                    <input type="checkbox" name="addParmesao" value="true" id="parmesao" />
-                    <label for="parmesao">Adicionar Queijo Parmesão Extra? (R$ 5,00)</label>
-                </div>
-                <br />
-
-                <div>
-                    <input type="checkbox" name="addGelo" value="true" id="gelo" />
-                    <label for="gelo">Adicionar Gelo Extra? (R$ 2,00)</label>
-                </div>
-                <br />
-
-                <div>
-                    <input type="checkbox" name="addLimao" value="true" id="limao" />
-                    <label for="limao">Adicionar Limão Extra? (R$ 3,00)</label>
-                </div>
-                <br />
-
-                <div>
-                    <input type="checkbox" name="addSorvete" value="true" id="sorvete" />
-                    <label for="sorvete">Adicionar Sorvete? (R$ 20,00)</label>
-                </div>
-                <br />
-
-                <div>
-                    <label>Deseja retirar algum ingrediente do prato principal?</label><br />
-                    <input type="text" name="ingrediente" placeholder="Ex: Cebola..." />
-                </div>
-                <br />
-                
-                <button type="submit">Confirmar e Fazer Pedido</button>
-            </form>
-
-
-        }
-        <form method="post">
-    <button type="submit" name="acao" value="undo">⏪ Desfazer Último Pedido</button>
-</form>
-
-<hr />
-        <hr />
-        <h3>Histórico de Pedidos Salvos:</h3>
-
-        @if (meuHistorico != null && meuHistorico.GetHistorico().Count > 0)
-        {
-            <ul>
-                @foreach (var memento in meuHistorico.GetHistorico())
-                {
-                    <li>
-                        <strong>@memento.GetData().ToString("HH:mm:ss")</strong> -
-                        @memento.GetPratoPrincipal()
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p>Nenhum pedido no histórico ainda.</p>
-        }
+        <p><strong> Prato Principal:</strong> @meuCliente.BuscarDescricaoPratoPrincipal()</p>
+        <p><strong> Sobremesa:</strong> @meuCliente.BuscarDescricaoSobremesa()</p>
+        <p><strong> Bebida:</strong> @meuCliente.BuscarDescricaoBebida()</p>
     </div>
+}
 
+
+@if (string.IsNullOrEmpty(escolhaAtual))
+{
+    <p> Escolha um menu para começar.</p>
 }
 else
 {
-    <p>Clique em um dos links acima para iniciar seu pedido.</p>
+    <h2>Monte seu pedido (@(escolhaAtual == "ita" ? "Italiano" : "Japonês"))</h2>
+
+    <form method="post" action="/Index?escolha=@escolhaAtual">
+
+        <h4>Extras:</h4>
+
+        <input type="checkbox" name="addParmesao" value="true" /> Parmesão <br />
+        <input type="checkbox" name="addGelo" value="true" /> Gelo <br />
+        <input type="checkbox" name="addLimao" value="true" /> Limão <br />
+        <input type="checkbox" name="addSorvete" value="true" /> Sorvete <br />
+
+        <br />
+
+        <label>Remover ingrediente:</label><br />
+        <input type="text" name="ingrediente" placeholder="Ex: cebola..." />
+
+        <br /><br />
+
+        <button type="submit" name="acao" value="fazer_pedido">Montar Pedido</button>
+        <button type="submit" name="acao" value="confirmar_final">Salvar Pedido</button>
+        <button type="submit" name="acao" value="undo">Desfazer</button>
+    </form>
+}
+
+<hr />
+
+@if (meuPedido != null && !string.IsNullOrEmpty(meuPedido.GetPratoPrincipal()))
+{
+    <h3>Pedido Atual</h3>
+    <p><strong>Prato:</strong> @meuPedido.GetPratoPrincipal()</p>
+    <p><strong>Sobremesa:</strong> @meuPedido.GetSobremesa()</p>
+    <p><strong>Bebida:</strong> @meuPedido.GetBebida()</p>
+}
+
+<hr />
+
+<h3>Histórico (Memento)</h3>
+
+@if (meuHistorico != null && meuHistorico.GetHistorico().Count > 0)
+{
+    <ul>
+        @foreach (var item in meuHistorico.GetHistorico())
+        {
+            <li>
+                <strong>@item.GetData().ToString("HH:mm:ss")</strong> -
+                @item.GetPratoPrincipal()
+                @item.GetBebida()
+                @item.GetSobremesa()
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Nenhum pedido salvo ainda.</p>
 }
