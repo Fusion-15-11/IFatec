@@ -1,4 +1,4 @@
-﻿namespace IFatec.Class;
+﻿namespace IFatec.Class.Pedido;
 
 using IFatec.Interface;
 
@@ -23,7 +23,7 @@ using IFatec.Interface;
         this.Bebida = bebida;
         this.Data = data_hora;
 
-        Console.WriteLine("Pedido:\n\n" + PratoPrincipal + Sobremesa + Bebida + Data);
+        Console.WriteLine($"Pedido: {PratoPrincipal}, {Sobremesa}, {Bebida} em {Data}");
     }
 
     public IDadoPedido Save() //Salva esses dados em um memento, no caso o Ticket
@@ -45,4 +45,8 @@ using IFatec.Interface;
         this.Data = dadopedido.GetData();
         Console.Write($"Pedido Mudou Para:\n\n Prato Principal: {PratoPrincipal}\n Sobremesa: {Sobremesa}\n Bebida: {Bebida}");
     }
+
+    public string GetPratoPrincipal() => this.PratoPrincipal;
+    public string GetSobremesa() => this.Sobremesa;
+    public string GetBebida() => this.Bebida;
 }

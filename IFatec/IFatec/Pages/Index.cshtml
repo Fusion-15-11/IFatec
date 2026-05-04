@@ -3,17 +3,24 @@
 @attribute [IgnoreAntiforgeryToken]
 @using IFatec.Factories
 @using IFatec
+@using IFatec.Class.Pedido
+@functions {
+    private static Pedido meuPedido = null;
+    private static Historico meuHistorico = null;
+}
+
+
 
 @{
     // Verifica se a requisição é uom POST (clique no botão de fazer pedido)
     bool pedidoRealizado = Request.Method == "POST";
-    
+
     // Pega a escolha da URL para não perder a referência da fábrica
     string escolhaAtual = Request.Query["escolha"].ToString();
-    
+
     // Pega o ingrediente digitado, caso o pedido tenha sido realizado
     string ingredienteForm = pedidoRealizado ? Request.Form["ingrediente"].ToString() : "";
-    
+
     //verifica se queijo foi marcado
     bool addParmesao = pedidoRealizado && Request.Form["addParmesao"] == "true";
 
@@ -22,6 +29,13 @@
     bool addLimao = pedidoRealizado && Request.Form["addLimao"] == "true";
 
     bool addSorvete = pedidoRealizado && Request.Form["addSorvete"] == "true";
+
+    bool clickDesfazer = Request.Method == "POST" && Request.Form["acao"] == "undo";
+
+    if (clickDesfazer && meuHistorico != null)
+    {
+        meuHistorico.Desfazer();
+    }
 
 
 
@@ -36,7 +50,7 @@
 
     // Aplica a personalização SE o botão foi clicado
     if (pedidoRealizado && meuCliente != null) {
-        
+
         // 1. Se marcou a caixa do queijo, aplica o DECORATOR
         if (addParmesao) {
             meuCliente.AdicionarExtraParmesao();
@@ -83,6 +97,19 @@
 
         // 2. Retira o ingrediente (se o usuário digitou algum)
         meuCliente.PersonalizarPrato(ingredienteForm);
+
+        meuPedido = new Pedido(
+        meuCliente.BuscarDescricaoPratoPrincipal(),
+        meuCliente.BuscarDescricaoSobremesa(),
+        meuCliente.BuscarDescricaoBebida(),
+        DateTime.Now);
+
+        if (meuHistorico == null)
+        {
+            meuHistorico = new Historico(meuPedido);
+        }
+
+        meuHistorico.Backup();
     }
 }
 
@@ -105,15 +132,28 @@
     <div>
         <h2>Resumo: @(escolhaAtual == "ita" ? "Pedido Italiano" : "Pedido Japonês")</h2>
 
-        <h3>PRATO PRINCIPAL:</h3>
-        <p>@meuCliente.BuscarDescricaoPratoPrincipal()</p>
+        @if (meuPedido != null)
+        {
+            <h3>PRATO PRINCIPAL:</h3>
+            <p>@meuPedido.GetPratoPrincipal()</p>
 
-        <h3>SOBREMESA:</h3>
-        <p>@meuCliente.BuscarDescricaoSobremesa()</p>
+            <h3>SOBREMESA:</h3>
+            <p>@meuPedido.GetSobremesa()</p>
 
-        <h3>BEBIDA:</h3>
-        <p>@meuCliente.BuscarDescricaoBebida()</p>
+            <h3>BEBIDA:</h3>
+            <p>@meuPedido.GetBebida()</p>
+        }
+        else if (meuCliente != null)
+        {
+            <h3>PRATO PRINCIPAL:</h3>
+            <p>@meuCliente.BuscarDescricaoPratoPrincipal()</p>
 
+            <h3>SOBREMESA:</h3>
+            <p>@meuCliente.BuscarDescricaoSobremesa()</p>
+
+            <h3>BEBIDA:</h3>
+            <p>@meuCliente.BuscarDescricaoBebida()</p>
+        }
         @if (!pedidoRealizado)
         {
             <hr />
@@ -155,7 +195,32 @@
 
 
         }
+        <form method="post">
+    <button type="submit" name="acao" value="undo">⏪ Desfazer Último Pedido</button>
+</form>
+
+<hr />
+        <hr />
+        <h3>Histórico de Pedidos Salvos:</h3>
+
+        @if (meuHistorico != null && meuHistorico.GetHistorico().Count > 0)
+        {
+            <ul>
+                @foreach (var memento in meuHistorico.GetHistorico())
+                {
+                    <li>
+                        <strong>@memento.GetData().ToString("HH:mm:ss")</strong> -
+                        @memento.GetPratoPrincipal()
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>Nenhum pedido no histórico ainda.</p>
+        }
     </div>
+
 }
 else
 {

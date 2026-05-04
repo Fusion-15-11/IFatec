@@ -2,7 +2,7 @@
 
 using IFatec.Interface;
 
-class Ticket : IDadoPedido /**/
+class Ticket : IDadoPedido /*Memento*/
 {
     private string PratoPrincipal;
     private string Sobremesa;

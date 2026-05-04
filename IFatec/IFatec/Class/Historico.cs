@@ -1,5 +1,4 @@
-﻿namespace IFatec.Class;
-
+﻿namespace IFatec.Class.Pedido;
 using IFatec.Interface;
 class Historico //Caretaker
 {
@@ -28,25 +27,21 @@ class Historico //Caretaker
         var _dadopedido = this.dadopedido.Last();
         this.dadopedido.Remove(_dadopedido);
 
-        Console.WriteLine("Histórico: Restaurando Para: " + _dadopedido.GetPratoPrincipal());
-
+        
         try
         {
+            Console.WriteLine("Histórico: Restaurando Para: " + _dadopedido.GetPratoPrincipal());
             this.pedido.Restore(_dadopedido);
+            return;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            this.Desfazer();
+            Console.WriteLine($"Erro ao restaurar snapshot: {ex.Message}");
         }
     }
 
-    public void MostrarHistorico()
+    public List<IDadoPedido> GetHistorico()
     {
-        Console.WriteLine("Histórico: Aqui está a lista de Pedidos:");
-
-        foreach (var _dadopedido in this.dadopedido)
-        {
-            Console.WriteLine(_dadopedido.GetPratoPrincipal());
-        }
+        return this.dadopedido;
     }
 }
