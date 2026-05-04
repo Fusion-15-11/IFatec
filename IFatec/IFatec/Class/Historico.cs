@@ -48,6 +48,7 @@ class Historico
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public List<IDadoPedido> GetHistorico()
     {
         return this.dadopedido;
@@ -58,6 +59,11 @@ class Historico
         this.pedido = novoPedido;
     }
 }
+=======
+    // Conversão para lista para o INDEX
+    public List<IDadoPedido> GetHistorico() => _dadopedido.ToList();
+}
+>>>>>>> Erick
 =======
     // Conversão para lista para o INDEX
     public List<IDadoPedido> GetHistorico() => _dadopedido.ToList();
