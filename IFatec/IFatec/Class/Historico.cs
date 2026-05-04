@@ -1,52 +1,52 @@
-﻿namespace IFatec.Class.Pedido;
+﻿using System.Collections.Generic;
+using System.Linq;
 using IFatec.Interface;
-class Historico //Caretaker
+
+namespace IFatec.Class.Pedido;
+
+//Caretaker - Onde são armazenados os tickets (mementos) realizados em formato de pilha
+class Historico
 {
-    private List<IDadoPedido> dadopedido = new List<IDadoPedido>(); //Lista de Dados do Pedido
+    //Declaração das Variáveis
+    private Stack<IDadoPedido> _dadopedido = new Stack<IDadoPedido>();
+    private Pedido _pedido;
 
-    private Pedido pedido = null;
-
-    public Historico(Pedido _pedido)
+    public Historico(Pedido pedido)
     {
-        this.pedido = _pedido;
+        _pedido = pedido;
     }
 
     public void Backup()
     {
-        Console.WriteLine("Histórico: Salvando Pedido...");
-        this.dadopedido.Add(this.pedido.Save());
+        // Salva o estado atual no topo da pilha
+        _dadopedido.Push(_pedido.Save());
     }
 
     public void Desfazer()
     {
-        if (this.dadopedido.Count == 0)
+        if (_dadopedido.Count <= 1)
         {
+            Console.WriteLine("Histórico: Não há estados anteriores para restaurar.");
             return;
         }
 
-        var _dadopedido = this.dadopedido.Last();
-        this.dadopedido.Remove(_dadopedido);
+        // Remove o estado atual
+        _dadopedido.Pop();
 
-        if (this.dadopedido.Count > 0)
+        //Olha o estado anterior sem removê-lo
+        var ticketAnt = _dadopedido.Peek();
+
+        try
         {
-            // Pega o NOVO último (que é o pedido anterior)
-            var ticketAnt = this.dadopedido.Last();
-
-            try
-            {
-                Console.WriteLine("Histórico: Restaurando Para: " + _dadopedido.GetPratoPrincipal());
-                this.pedido.Restore(ticketAnt);
-                return;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Erro ao restaurar snapshot: {ex.Message}");
-            }
+            Console.WriteLine("Histórico: Restaurando para o estado anterior...");
+            _pedido.Restore(ticketAnt);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao restaurar: {ex.Message}");
         }
     }
 
-    public List<IDadoPedido> GetHistorico()
-    {
-        return this.dadopedido;
-    }
+    // Conversão para lista para o INDEX
+    public List<IDadoPedido> GetHistorico() => _dadopedido.ToList();
 }

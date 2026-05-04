@@ -1,15 +1,11 @@
 ﻿namespace IFatec.Class.Pedido;
-
 using IFatec.Interface;
+using System;
 
-
-    //Memento
-
-    class Pedido /* Originator: Seria o objeto mãe, nesse caso, o PEDIDO, que armazenaria o Prato Principal, 
-             Sobremesa e Bebida do Cliente onde ele pode ter os métodos Salvar(um novo pedido com os pratos) 
-             e Restaurar (objeto que já foi usado anteriormente) */
+// Originator - Pedido no seu estado atual, com os adicionais
+class Pedido
 {
-    //Declaração das varáveis
+    //Declara as varáveis
     private string PratoPrincipal;
     private string Sobremesa;
     private string Bebida;
@@ -17,33 +13,32 @@ using IFatec.Interface;
 
     public Pedido(string pratoPrincipal, string sobremesa, string bebida, DateTime data_hora)
     {
-        //Traz os dados vindos do pedido que o cliente fez
+        //Recebe dentro do pedido, os parâmetros que o cliente adicionou em seus pratos
         this.PratoPrincipal = pratoPrincipal;
         this.Sobremesa = sobremesa;
         this.Bebida = bebida;
         this.Data = data_hora;
-
-        Console.WriteLine($"Pedido: {PratoPrincipal}, {Sobremesa}, {Bebida} em {Data}");
     }
 
-    public IDadoPedido Save() //Salva esses dados em um memento, no caso o Ticket
+    public Ticket Save()
     {
-        return new Ticket(PratoPrincipal, Sobremesa, Bebida, Data);
+        // Cria o (Ticket) com os dados atuais
+        return new Ticket(this.PratoPrincipal, this.Sobremesa, this.Bebida, this.Data);
     }
 
+    //Trata para ver se o Ticket está de acordo com a interface DadoPedido
     public void Restore(IDadoPedido dadopedido)
-    /*O método restore, está restaurando um objeto que já foi utilizado */
     {
-        //Verifica se o dadopedido, é do tipo ticket, ou seja, com as mesmas variáveis
-        if (!(dadopedido is Ticket))
+        if (!(dadopedido is Ticket ticket))
         {
-            throw new Exception("Pedido Desconhecido: " + dadopedido.ToString());
+            throw new Exception("Tipo de Ticket inválido.");
         }
-        this.PratoPrincipal = dadopedido.GetPratoPrincipal();
-        this.Sobremesa = dadopedido.GetSobremesa();
-        this.Bebida = dadopedido.GetBebida();
-        this.Data = dadopedido.GetData();
-        Console.Write($"Pedido Mudou Para:\n\n Prato Principal: {PratoPrincipal}\n Sobremesa: {Sobremesa}\n Bebida: {Bebida}");
+
+        // Restaura os campos internos a partir do Ticket
+        this.PratoPrincipal = ticket.GetPratoPrincipal();
+        this.Sobremesa = ticket.GetSobremesa();
+        this.Bebida = ticket.GetBebida();
+        this.Data = ticket.GetData();
     }
 
     public string GetPratoPrincipal() => this.PratoPrincipal;

@@ -1,0 +1,12 @@
+Comportamental - Memento
+
+Originator - Seria o objeto mãe, nesse caso, o PEDIDO, que armazenaria o Prato Principal, Sobremesa e Bebida do Cliente
+onde ele pode ter os métodos Salvar(um novo pedido com os prator) e Restaurar (objeto que já foi usado anteriormente)
+
+Memento - Aqui onde o memento tira um foto desse PEDIDO, no caso o TICKET, uma comprovação desse PEDIDO, onde não
+pode ser alterado
+
+Caretaker - Aqui, onde a lista de "modificações" desse PEDIDO, onde e possível desfazer os estados e voltar ao estado
+padrão
+
+
