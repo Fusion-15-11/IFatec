@@ -9,7 +9,7 @@ namespace IFatec.Products.Italiana
         {
             _ingredienteRemovido = ingrediente;
         }
-        public string BuscarDescrição()
+        public string BuscarDescricao()
         {
             string descricao = "LASANHA:\n Massa de ovos, molho bolonhesa rico em sabor, bechamel cremoso e muçarela. Gratinada com parmesão ralado na hora. \n";
 

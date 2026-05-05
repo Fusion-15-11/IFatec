@@ -3,6 +3,6 @@
     // AbstractProduct
     public interface ISobremesa
     {
-        String BuscarDescrição();
+        String BuscarDescricao();
     }
 }

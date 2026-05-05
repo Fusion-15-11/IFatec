@@ -12,7 +12,7 @@ namespace IFatec.Products.Japonesa
         {
             _ingredienteRemovido = ingrediente;
         }
-        public string BuscarDescrição()
+        public string BuscarDescricao()
         {
             string descricao = "YAKISOBA:\n Macarrão selado na chapa com mix de legumes frescos, carnes [bovina e frango] e molho à base de shoyu e especiarias orientais.\n";
 

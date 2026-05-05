@@ -9,9 +9,9 @@ namespace IFatec.Decorators
             public LimaoDecorator(IBebida bebida) : base(bebida)
             {}
     
-            public override string BuscarDescrição()
+            public override string BuscarDescricao()
             {
-                return base.BuscarDescrição() + " Limão";
+                return base.BuscarDescricao() + " Limão";
         }
     }
 }

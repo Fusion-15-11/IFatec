@@ -12,9 +12,9 @@ namespace IFatec.Decorators
         }
 
         // Sobrescrevemos a descrição para adicionar o texto do queijo
-        public override string BuscarDescrição()
+        public override string BuscarDescricao()
         {
-            return base.BuscarDescrição() + " + Queijo Parmesão Extra";
+            return base.BuscarDescricao() + " + Queijo Parmesão Extra";
         }
     }
 }

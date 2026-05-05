@@ -3,7 +3,7 @@
     // AbstractProduct
     public interface IPratoPrincipal
     {
-        String BuscarDescrição();
+        String BuscarDescricao();
         void RetirarIngrediente(string ingrediente);
     }
 }

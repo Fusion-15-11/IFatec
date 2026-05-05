@@ -6,7 +6,7 @@ namespace IFatec.Products.Japonesa
 
     public class Mochi : ISobremesa
     {
-        public string BuscarDescrição()
+        public string BuscarDescricao()
         {
             return "MOCHI:\n Delicada massa japonesa de arroz glutinoso com textura macia e elástica. Recheado com pasta de feijão azuki ou sorvete. Adicional: \n";
         }
