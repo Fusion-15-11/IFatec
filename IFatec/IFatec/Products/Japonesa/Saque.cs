@@ -6,7 +6,7 @@ namespace IFatec.Products.Japonesa
 
     public class Saque : IBebida
     {
-        public string BuscarDescrição()
+        public string BuscarDescricao()
         {
             return "Sake:\n Bebida fermentada de arroz polido, com aroma suave e teor alcoólico balanceado. Pode ser apreciado quente ou gelado. Adicional: \n";
         }

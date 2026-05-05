@@ -1,5 +1,6 @@
 ﻿using IFatec.Factories;
-using IFatec.Decorators; 
+using IFatec.Decorators;
+using IFatec.Interface;
 
 namespace IFatec
 {
@@ -32,17 +33,17 @@ namespace IFatec
 
         public string BuscarDescricaoBebida()
         {
-            return bebida.BuscarDescrição();
+            return bebida.BuscarDescricao();
         }
 
         public string BuscarDescricaoPratoPrincipal()
         {
-            return pratoPrincipal.BuscarDescrição();
+            return pratoPrincipal.BuscarDescricao();
         }
 
         public string BuscarDescricaoSobremesa()
         {
-            return sobremesa.BuscarDescrição();
+            return sobremesa.BuscarDescricao();
         }
 
         // embrulhar a bebida com gelo ou limão
